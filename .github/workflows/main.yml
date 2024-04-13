@@ -42,18 +42,13 @@ jobs:
         . venv/bin/activate
         pytest
     
-    - name: Install Dependencies
-      run: |
-        . venv/bin/activate
-        pip install -r requirements.txt
-        cd api
-        pip install -e .
-    
     - name: Create API artifact
       run: |
         . venv/bin/activate
         cd api
         zip -r ../api.zip .
+        cd ..
+        zip -r api.zip requirements.txt
     
     - name: Upload API artifact
       uses: actions/upload-artifact@v2
