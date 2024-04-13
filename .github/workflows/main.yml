@@ -36,6 +36,7 @@ jobs:
         python -m venv venv
         source venv/bin/activate
         pip3 install -r requirements.txt
+        pip3 install -r requirements.txt -t .  # Install dependencies directly into project directory
     
     - name: Run Tests
       run: |
@@ -44,11 +45,7 @@ jobs:
     
     - name: Create API artifact
       run: |
-        . venv/bin/activate
-        cd api
-        zip -r ../api.zip .
-        cd ..
-        zip -r api.zip requirements.txt
+        zip -r api.zip .
     
     - name: Upload API artifact
       uses: actions/upload-artifact@v2
