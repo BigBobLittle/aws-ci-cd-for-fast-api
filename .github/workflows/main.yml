@@ -42,10 +42,16 @@ jobs:
         . venv/bin/activate
         pytest
     
-    - name: Create API artifact
+    - name: Install Dependencies in API
       run: |
         . venv/bin/activate
         pip install -r requirements.txt
+        cd api
+        pip install -e .
+    
+    - name: Create API artifact
+      run: |
+        . venv/bin/activate
         cd api
         zip -r ../api.zip .
     
@@ -74,6 +80,10 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: api
+    
+    - name: Inspect API Artifact
+      run: |
+        unzip -l api.zip
     
     - name: Upload to S3
       run: aws s3 cp api.zip s3://fastapi-ci-cd-on-aws-2024/api.zip
