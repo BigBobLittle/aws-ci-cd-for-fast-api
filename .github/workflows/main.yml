@@ -42,7 +42,7 @@ jobs:
         . venv/bin/activate
         pytest
     
-    - name: Install Dependencies in API
+    - name: Install Dependencies
       run: |
         . venv/bin/activate
         pip install -r requirements.txt
