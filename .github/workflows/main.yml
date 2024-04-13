@@ -39,17 +39,25 @@ jobs:
             pip3 install fastapi uvicorn  # Install FastAPI and its dependencies
             pip3 freeze > requirements.txt  # Update requirements.txt with installed dependencies
 
-    - name: Create API artifact
+    - name: Install Dependencies
+      if: steps.cache-venv.outputs.cache-hit != 'true'
       run: |
-            . venv/bin/activate
-            zip -r api.zip .
+            mkdir dependencies
+            pip3 install -t dependencies -r requirements.txt
 
-    
+    - name: Zip Dependencies
+      run: |
+            (cd dependencies; zip -r ../aws_lambda_artifact.zip .)
+
+    - name: Zip API Contents
+      run: |
+            zip -r aws_lambda_artifact.zip api/*
+
     - name: Upload API artifact
       uses: actions/upload-artifact@v2
       with:
         name: api
-        path: api.zip
+        path: aws_lambda_artifact.zip
 
   cd:
     runs-on: ubuntu-latest
