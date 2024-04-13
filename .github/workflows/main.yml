@@ -42,11 +42,12 @@ jobs:
     - name: Install Dependencies
       if: steps.cache-venv.outputs.cache-hit != 'true'
       run: |
-            mkdir dependencies
+            mkdir -p dependencies
             pip3 install -t dependencies -r requirements.txt
 
     - name: Zip Dependencies
       run: |
+            ls dependencies | xargs -I {} test -f dependencies/{} || exit 1
             (cd dependencies; zip -r ../aws_lambda_artifact.zip .)
 
     - name: Zip API Contents
