@@ -1,4 +1,4 @@
-name: FastAPI CI/CD - 2
+name: FastAPI CI/CD
 
 on:
   push:
@@ -45,6 +45,7 @@ jobs:
     - name: Create API artifact
       run: |
         . venv/bin/activate
+        pip install -r requirements.txt
         cd api
         zip -r ../api.zip .
     
@@ -60,7 +61,6 @@ jobs:
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     
     steps:
-   
     - name: Install AWS CLI
       uses: unfor19/install-aws-cli-action@v1
       with:
