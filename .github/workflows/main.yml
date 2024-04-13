@@ -33,19 +33,17 @@ jobs:
     - name: Activate Virtual ENV
       if: steps.cache-venv.outputs.cache-hit != 'true'
       run: |
-        python -m venv venv
-        source venv/bin/activate
-        pip3 install -r requirements.txt
-        pip3 install -r requirements.txt -t .  # Install dependencies directly into project directory
-    
-    - name: Run Tests
-      run: |
-        . venv/bin/activate
-        pytest
-    
+            python -m venv venv
+            source venv/bin/activate
+            pip3 install -r requirements.txt
+            pip3 install fastapi uvicorn  # Install FastAPI and its dependencies
+            pip3 freeze > requirements.txt  # Update requirements.txt with installed dependencies
+
     - name: Create API artifact
       run: |
-        zip -r api.zip .
+            . venv/bin/activate
+            zip -r api.zip .
+
     
     - name: Upload API artifact
       uses: actions/upload-artifact@v2
