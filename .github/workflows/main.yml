@@ -47,6 +47,7 @@ jobs:
 
     - name: Zip Dependencies
       run: |
+            ls dependencies || exit 1  # Exit if 'dependencies' directory does not exist
             ls dependencies | xargs -I {} test -f dependencies/{} || exit 1
             (cd dependencies; zip -r ../aws_lambda_artifact.zip .)
 
