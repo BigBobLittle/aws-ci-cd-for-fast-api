@@ -27,6 +27,6 @@ folder and subdirectories
 > zip -g ./functions.zip -r app
 
 
-export AWS_ACCESS_KEY_ID=AKIAZXVW575LI3MJ6BGO
-export AWS_SECRET_ACCESS_KEY=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
-export COGNITO_POOL_ID=eu-west-2_I3hrvZ6IN
+export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=
+export COGNITO_POOL_ID=
