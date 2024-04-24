@@ -1,0 +1,37 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: FastAPI Service
+
+Resources:
+  FastAPIService:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app.handler
+      Runtime: python3.8
+      CodeUri: .
+      Timeout: 30
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref TextsTable
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /
+            Method: ANY
+
+  TextsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: TextsTable
+      AttributeDefinitions:
+        - AttributeName: userId
+          AttributeType: S
+        - AttributeName: timestamp
+          AttributeType: N
+      KeySchema:
+        - AttributeName: userId
+          KeyType: HASH
+        - AttributeName: timestamp
+          KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST

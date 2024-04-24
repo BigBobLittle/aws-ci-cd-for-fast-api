@@ -3,3 +3,4 @@
 fastapi-venv/
 dependencies 
 aws_lambda_artifact.zip
+.env
